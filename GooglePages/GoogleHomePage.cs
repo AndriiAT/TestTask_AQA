@@ -9,6 +9,9 @@ namespace TestTask_AQA.GooglePages
         private IWebElement _searchBox =>
             Browser.Driver.FindElement(By.Name("q"));
 
+        private IWebElement _searchBtn =>
+            Browser.Driver.FindElement(By.XPath("//input[contains(@value, 'Google')]"));
+
         public GoogleHomePage() { }
 
         public void GoTo()
