@@ -2,9 +2,9 @@
 {
     public class Edge : Browser
     {
-        public Edge()
+        public Edge(bool headless)
         {
-            Initialize();
+            Initialize(headless);
         }
         protected override void Initialize(bool headless = false)
         {
