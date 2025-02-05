@@ -6,18 +6,18 @@ namespace TestTask_AQA.Tests
 {
     public class UIBase : BaseTest
     {
-        protected static void SetUpDriver()
+        protected static void SetUpDriver(bool headless)
         {
             switch (GlobalConfigs.Browser)
             {
                 case Browsers.Chrome:
-                    new Chrome();
+                    new Chrome(headless);
                     break;
                 case Browsers.Firefox:
-                    new Firefox();
+                    new Firefox(headless);
                     break;
                 case Browsers.Edge:
-                    new Edge();
+                    new Edge(headless);
                     break;
                 default:
                     throw new Exception("Unsupported browser: " + GlobalConfigs.Browser);
