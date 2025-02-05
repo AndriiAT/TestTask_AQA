@@ -41,4 +41,6 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Run tests
+      env:
+        HEADLESS: true
       run: dotnet test --configuration Release --framework net8.0 --verbosity normal --settings test.runsettings
