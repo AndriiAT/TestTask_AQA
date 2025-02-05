@@ -27,11 +27,29 @@ jobs:
         sudo apt-get install -y chromium-chromedriver
         sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
+    - name: Install Firefox and GeckoDriver
+      run: |
+        sudo apt-get install -y firefox
+        sudo apt-get install -y wget
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.32.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/
+
+    - name: Install Edge and EdgeDriver
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository -y "deb [arch=amd64] http://packages.microsoft.com/repos/edge stable main"
+        sudo apt-get update
+        sudo apt-get install -y microsoft-edge-stable
+        wget https://msedgedriver.azureedge.net/109.0.1518.78/edgedriver_linux64.zip
+        unzip edgedriver_linux64.zip
+        sudo mv msedgedriver /usr/local/bin/
+
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
-      run: dotnet build
+      run: dotnet build --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test --settings test.runsettings
+      run: dotnet test --configuration Release --framework net8.0 --verbosity normal --settings test.runsettings
