@@ -24,6 +24,7 @@ namespace TestTask_AQA.Utils
                 options.AddArgument("--headless");
             //can be added more options
             options.AddArgument("--disable-extensions");
+            options.AddArgument("--whitelisted-ips=''");
             return options;
         }
 
