@@ -14,18 +14,48 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
+
+    - name: Install ChromeDriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-chromedriver
+        sudo sed -i 's/^exec "$chromedriver" "$@"/exec "$chromedriver" --whitelisted-ips="" "$@"/' /usr/bin/google-chrome
+
+    - name: Install Firefox and GeckoDriver
+      run: |
+        sudo apt-get install -y firefox
+        sudo apt-get install -y wget
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.32.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/
+        if [ ! -L /usr/bin/geckodriver ]; then
+          sudo ln -s /usr/local/bin/geckodriver /usr/bin/geckodriver
+        fi
+
+    - name: Install Edge and EdgeDriver
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository -y "deb [arch=amd64] http://packages.microsoft.com/repos/edge stable main"
+        sudo apt-get update
+        sudo apt-get install -y microsoft-edge-stable
+        wget https://msedgedriver.azureedge.net/109.0.1518.78/edgedriver_linux64.zip
+        unzip edgedriver_linux64.zip
+        sudo mv msedgedriver /usr/local/bin/
+        if [ ! -L /usr/bin/msedgedriver ]; then
+          sudo ln -s /usr/local/bin/msedgedriver /usr/bin/msedgedriver
+        fi
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test --configuration Release --framework net8.0 --logger "trx;LogFileName=test_results.trx" --output ./test-results --verbosity normal --settings test.runsettings
+      run: dotnet test --configuration Release --framework net8.0 --verbosity normal --settings test.runsettings
