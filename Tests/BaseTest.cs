@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TestTask_AQA.Data;
 
 namespace TestTask_AQA.Tests
 {
