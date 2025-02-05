@@ -28,4 +28,4 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration Release --framework net8.0 --logger "trx;LogFileName=test_results.trx" --output ./test-results --verbosity normal --settings test.runsettings
