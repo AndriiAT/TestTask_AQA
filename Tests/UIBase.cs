@@ -27,7 +27,8 @@ namespace TestTask_AQA.Tests
         public override void StandardOneTimeSetUp()
         {
             GlobalConfigs.ReadConfigs();
-            SetUpDriver();
+            bool headless = Environment.GetEnvironmentVariable("HEADLESS") == "true";
+            SetUpDriver(headless);
         }
 
         public override void StandardOneTimeTearDown()
