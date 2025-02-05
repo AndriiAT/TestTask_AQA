@@ -4,9 +4,9 @@ namespace TestTask_AQA.Utils
 {
     public class Chrome : Browser
     {
-        public Chrome()
+        public Chrome(bool headless)
         {
-            Initialize();
+            Initialize(headless);
         }
 
         protected override void Initialize(bool headless = false)
