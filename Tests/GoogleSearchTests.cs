@@ -1,12 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using TestTask_AQA.GooglePages;
 
 namespace TestTask_AQA.Tests
 {
-    internal class GoogleSearchTests
+    [TestFixture]
+    public class GoogleSearchTests : UIBase
     {
+        private GoogleHomePage _googleHomePage;
+        private GoogleResultsPage _googleResultsPage;
+
+        public override void ExtendedOneTimeSetUp()
+        {
+            _googleHomePage = new GoogleHomePage();
+            _googleResultsPage = new GoogleResultsPage();
+        }
+
+        [Test]
+        public void SearchForSeleniumCSharpTutorial_ShouldReturnResults()
+        {
+            _googleHomePage.GoTo();
+
+            Assert.That(_googleHomePage.IsSearchBoxVisible(), Is.True);
+
+            _googleHomePage.EnterSearchText("Selenium C# tutorial");
+            _googleHomePage.SubmitSearch();
+
+            _googleHomePage.CheckCapcha();
+            Assert.That(_googleResultsPage.ResultsExist(), Is.True);
+            Assert.That(_googleResultsPage.FirstResultContains("Selenium"), Is.True);
+        }
     }
 }
