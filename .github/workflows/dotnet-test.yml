@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-chromedriver
-        sudo sed -i 's/^exec "$chromedriver" "$@"/exec "$chromedriver" --whitelisted-ips="" "$@"/' /usr/bin/chromedriver
+        sudo sed -i 's/^exec "$chromedriver" "$@"/exec "$chromedriver" --whitelisted-ips="" "$@"/' /usr/bin/google-chrome
 
     - name: Install Firefox and GeckoDriver
       run: |
