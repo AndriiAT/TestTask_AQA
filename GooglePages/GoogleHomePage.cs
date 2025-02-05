@@ -9,13 +9,6 @@ namespace TestTask_AQA.GooglePages
         private IWebElement _searchBox =>
             Browser.Driver.FindElement(By.Name("q"));
 
-        private IWebElement _searchBtn =>
-            Browser.Driver.FindElement(By.XPath("//input[contains(@value, 'Google')]"));
-
-        private IWebElement _signIn =>
-            Browser.Driver.FindElement(By.XPath("//span[text()='Sign in']"));
-
-
         public GoogleHomePage() { }
 
         public void GoTo()
@@ -35,9 +28,20 @@ namespace TestTask_AQA.GooglePages
 
         public void CheckCapcha()
         {
-            Browser.Driver.SwitchTo().Frame(0);
-            new CheckPage().CheckCapcha();
-            Browser.Driver.SwitchTo().DefaultContent();
+            try
+            {
+                Browser.Driver.SwitchTo().Frame(0);
+                new CheckPage().CheckCapcha();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log it)
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            finally
+            {
+                Browser.Driver.SwitchTo().DefaultContent();
+            }
         }
 
         public void SubmitSearch()
