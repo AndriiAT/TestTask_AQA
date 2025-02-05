@@ -32,8 +32,12 @@ namespace TestTask_AQA.Tests
 
         public override void StandardOneTimeTearDown()
         {
-            Browser.Driver.Quit();
-            Browser.Driver.Dispose();
+            if (Browser.Driver != null)
+            {
+                Browser.Driver.Quit();
+                Browser.Driver.Dispose();
+                Browser.Driver = null;
+            }
         }
     }
 }
