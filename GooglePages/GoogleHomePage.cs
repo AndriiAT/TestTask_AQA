@@ -15,6 +15,7 @@ namespace TestTask_AQA.GooglePages
         private IWebElement _signIn =>
             Browser.Driver.FindElement(By.XPath("//span[text()='Sign in']"));
 
+
         public GoogleHomePage() { }
 
         public void GoTo()
