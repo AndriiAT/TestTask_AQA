@@ -25,7 +25,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-chromedriver
-        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+        if [ ! -L /usr/bin/chromedriver ]; then
+          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+        fi
 
     - name: Install Firefox and GeckoDriver
       run: |
@@ -34,6 +36,9 @@ jobs:
         wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
         tar -xzf geckodriver-v0.32.0-linux64.tar.gz
         sudo mv geckodriver /usr/local/bin/
+        if [ ! -L /usr/bin/geckodriver ]; then
+          sudo ln -s /usr/local/bin/geckodriver /usr/bin/geckodriver
+        fi
 
     - name: Install Edge and EdgeDriver
       run: |
@@ -44,6 +49,9 @@ jobs:
         wget https://msedgedriver.azureedge.net/109.0.1518.78/edgedriver_linux64.zip
         unzip edgedriver_linux64.zip
         sudo mv msedgedriver /usr/local/bin/
+        if [ ! -L /usr/bin/msedgedriver ]; then
+          sudo ln -s /usr/local/bin/msedgedriver /usr/bin/msedgedriver
+        fi
 
     - name: Restore dependencies
       run: dotnet restore
