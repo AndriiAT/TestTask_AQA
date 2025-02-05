@@ -2,9 +2,9 @@
 {
     public class Firefox : Browser
     {
-        public Firefox()
+        public Firefox(bool headless)
         {
-            Initialize();
+            Initialize(headless);
         }
 
         protected override void Initialize(bool headless = false)
